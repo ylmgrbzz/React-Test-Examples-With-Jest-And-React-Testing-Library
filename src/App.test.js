@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { useEffect, useState } from "react";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -104,6 +105,8 @@ test("renders TestComponentExamples3", () => {
 });
 
 function TestComponentExamplesQuery({ suffix }) {
+  const [name, setName] = useState("yalim");
+
   return (
     <>
       <div>
@@ -112,6 +115,7 @@ function TestComponentExamplesQuery({ suffix }) {
           {suffix === "2" && <div>Test Component2</div>}
           {suffix === "3" && <div>Test Component3</div>}
           {!suffix && <div>suffix yok</div>}
+          <div>{name}</div>
         </div>
       </div>
     </>
@@ -124,12 +128,40 @@ test("renders TestComponentExamplesQuery", () => {
   const element2 = screen.queryByText("Test Component2");
   const element3 = screen.queryByText("Test Component3");
   const elementSuffixYok = screen.queryByText("suffix yok");
+  const elementName = screen.queryByText("yalim");
+  const elementSuffix = screen.queryByText("Test Component1");
+
+  expect(elementName).toBeInTheDocument();
   expect(elementSuffixYok).toBeNull();
   expect(elementSuffixYok).not.toBeInTheDocument();
-  const elementSuffix = screen.queryByText("Test Component1");
   expect(elementSuffix).toBeInTheDocument();
 
   expect(element).toBeInTheDocument();
   expect(element2).toBeNull();
   expect(element3).toBeNull();
+});
+
+function TestComponentExamplesAsync() {
+  const [name, setName] = useState("yalim");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setName("yalimgrbz");
+    }, 300);
+    // }, 3000);
+  }, []);
+
+  return (
+    <>
+      <div>
+        <div>{name}</div>
+      </div>
+    </>
+  );
+}
+
+it("renders TestComponentExamplesAsync", async () => {
+  render(<TestComponentExamplesAsync />);
+  const element = await screen.findByText("yalimgrbz");
+  expect(element).toBeInTheDocument();
 });
