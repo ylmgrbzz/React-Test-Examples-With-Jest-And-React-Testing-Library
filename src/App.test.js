@@ -12,3 +12,21 @@ test("renders TestComponent", () => {
   expect(element).toBeInTheDocument();
   expect(linkElement).toBeInTheDocument();
 });
+
+function TestComponent2() {
+  return (
+    <>
+      <button>Test Component1</button>
+      <button>Test Component2</button>
+      <button>Test Component3</button>
+    </>
+  );
+}
+
+test("renders TestComponent2", () => {
+  render(<TestComponent2 />);
+  const element = screen.getByRole("button", {
+    name: "Test Component1",
+  });
+  expect(element).toBeInTheDocument();
+});
