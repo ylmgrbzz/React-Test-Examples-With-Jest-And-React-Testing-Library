@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { waitFor, render, screen } from "@testing-library/react";
 import { useEffect, useState } from "react";
 
 function TestComponent() {
@@ -158,4 +158,32 @@ it("renders TestComponentExamplesAsync", async () => {
   render(<TestComponentExamplesAsync />);
   const element = await screen.findByText("yalimgrbz");
   expect(element).toBeInTheDocument();
+});
+
+function TestComponentExamplesAsyncAwaitFor() {
+  const [name, setName] = useState("yalim");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setName("yalimgrbz");
+    }, 300);
+  }, []);
+
+  return (
+    <>
+      <div>
+        <div>{name}</div>
+      </div>
+    </>
+  );
+}
+
+it("renders TestComponentExamplesAsyncAwaitFor", async () => {
+  render(<TestComponentExamplesAsyncAwaitFor />);
+  await waitFor(() => {
+    expect(screen.getByText("yalimgrbz")).toBeInTheDocument();
+  });
+  await waitFor(() => {
+    expect(screen.queryByText("yalim")).not.toBeInTheDocument();
+  });
 });
