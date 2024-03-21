@@ -19,8 +19,10 @@ function TestComponentExamples() {
       <button>Test Component2</button>
       <button>Test Component3</button>
 
-      <label for="test">Test</label>
+      <label htmlFor="test">Test</label>
       <input id="test" />
+
+      <input placeholder="TestYlmgrbz" />
     </>
   );
 }
@@ -31,8 +33,10 @@ test("renders TestComponentExamples", () => {
     name: "Test Component1",
   });
   const elementLabel = screen.getByLabelText("Test");
-  const elementInput = screen.getByRole("textbox");
-  expect(elementInput).toBeInTheDocument();
+  const elementsInput = screen.getAllByRole("textbox");
+  const elementPlaceholder = screen.getByPlaceholderText("TestYlmgrbz");
+  expect(elementPlaceholder).toBeInTheDocument();
+  expect(elementsInput.length).toBe(2);
   expect(elementLabel).toBeInTheDocument();
   expect(element).toBeInTheDocument();
 });
