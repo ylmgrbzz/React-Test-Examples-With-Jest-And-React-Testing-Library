@@ -70,3 +70,15 @@ test("renders TestComponentExamples2", () => {
   expect(elementImg).toHaveAttribute("alt", "test");
   expect(element).toBeInTheDocument();
 });
+
+function TestComponentExamples3({ products }) {
+  return (
+    <>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
