@@ -12,7 +12,7 @@ test("renders TestComponent", () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-function TestComponent2() {
+function TestComponentExamples() {
   return (
     <>
       <button>Test Component1</button>
@@ -25,8 +25,8 @@ function TestComponent2() {
   );
 }
 
-test("renders TestComponent2", () => {
-  render(<TestComponent2 />);
+test("renders TestComponentExamples", () => {
+  render(<TestComponentExamples />);
   const element = screen.getByRole("button", {
     name: "Test Component1",
   });
