@@ -49,6 +49,9 @@ function TestComponentExamples2() {
   return (
     <>
       <input value="testValue" />
+      <img src="test.png" alt="test" />
+      <div title="modern testing">modern testing</div>
+      <div data-testid="modern testing">modern testing</div>
     </>
   );
 }
@@ -56,5 +59,14 @@ function TestComponentExamples2() {
 test("renders TestComponentExamples2", () => {
   render(<TestComponentExamples2 />);
   const element = screen.getByDisplayValue("testValue");
+  const elementImg = screen.getByAltText("test");
+  const elementDiv = screen.getByTitle("modern testing");
+  const elementDivTestId = screen.getByTestId("modern testing");
+
+  expect(elementDivTestId).toBeInTheDocument();
+  expect(elementDiv).toBeInTheDocument();
+  expect(elementImg).toBeInTheDocument();
+  expect(elementImg).toHaveAttribute("src", "test.png");
+  expect(elementImg).toHaveAttribute("alt", "test");
   expect(element).toBeInTheDocument();
 });
