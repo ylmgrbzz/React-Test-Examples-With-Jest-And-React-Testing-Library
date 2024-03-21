@@ -44,3 +44,17 @@ test("renders TestComponentExamples", () => {
   expect(elementLabel).toBeInTheDocument();
   expect(element).toBeInTheDocument();
 });
+
+function TestComponentExamples2() {
+  return (
+    <>
+      <input value="testValue" />
+    </>
+  );
+}
+
+test("renders TestComponentExamples2", () => {
+  render(<TestComponentExamples2 />);
+  const element = screen.getByDisplayValue("testValue");
+  expect(element).toBeInTheDocument();
+});
