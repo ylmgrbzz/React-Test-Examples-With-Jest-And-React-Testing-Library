@@ -125,6 +125,7 @@ test("renders TestComponentExamplesQuery", () => {
   const element3 = screen.queryByText("Test Component3");
   const elementSuffixYok = screen.queryByText("suffix yok");
   expect(elementSuffixYok).toBeNull();
+  expect(elementSuffixYok).not.toBeInTheDocument();
   const elementSuffix = screen.queryByText("Test Component1");
   expect(elementSuffix).toBeInTheDocument();
 
