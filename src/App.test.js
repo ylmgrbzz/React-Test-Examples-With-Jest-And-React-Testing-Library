@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import App from "./App";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -19,6 +18,9 @@ function TestComponent2() {
       <button>Test Component1</button>
       <button>Test Component2</button>
       <button>Test Component3</button>
+
+      <label for="test">Test</label>
+      <input id="test" />
     </>
   );
 }
@@ -28,5 +30,9 @@ test("renders TestComponent2", () => {
   const element = screen.getByRole("button", {
     name: "Test Component1",
   });
+  const elementLabel = screen.getByLabelText("Test");
+  const elementInput = screen.getByRole("textbox");
+  expect(elementInput).toBeInTheDocument();
+  expect(elementLabel).toBeInTheDocument();
   expect(element).toBeInTheDocument();
 });
