@@ -71,7 +71,7 @@ test("renders TestComponentExamples2", () => {
   expect(element).toBeInTheDocument();
 });
 
-function TestComponentExamples3({ products }) {
+function TestComponentExamplesList({ products }) {
   return (
     <>
       <ul>
@@ -82,3 +82,53 @@ function TestComponentExamples3({ products }) {
     </>
   );
 }
+
+test("renders TestComponentExamples3", () => {
+  const products = [
+    { id: 1, name: "product1" },
+    { id: 2, name: "product2" },
+    { id: 3, name: "product3" },
+  ];
+  render(<TestComponentExamplesList products={products} />);
+  const element = screen.getByText("product1");
+  const elements = screen.getAllByRole("listitem");
+  expect(element).toBeInTheDocument();
+  expect(elements.length).toBe(3);
+  expect(elements[0]).toHaveTextContent("product1");
+  expect(elements[1]).toHaveTextContent("product2");
+  expect(elements[2]).toHaveTextContent("product3");
+  expect(elements[0]).toHaveTextContent(/product1/i);
+  expect(elements[1]).toHaveTextContent(/product2/i);
+  expect(elements[2]).toHaveTextContent(/product3/i);
+  expect(elements).toHaveLength(3);
+});
+
+function TestComponentExamplesQuery({ suffix }) {
+  return (
+    <>
+      <div>
+        <div>
+          {suffix === "1" && <div>Test Component1</div>}
+          {suffix === "2" && <div>Test Component2</div>}
+          {suffix === "3" && <div>Test Component3</div>}
+          {!suffix && <div>suffix yok</div>}
+        </div>
+      </div>
+    </>
+  );
+}
+
+test("renders TestComponentExamplesQuery", () => {
+  render(<TestComponentExamplesQuery suffix="1" />);
+  const element = screen.queryByText("Test Component1");
+  const element2 = screen.queryByText("Test Component2");
+  const element3 = screen.queryByText("Test Component3");
+  const elementSuffixYok = screen.queryByText("suffix yok");
+  expect(elementSuffixYok).toBeNull();
+  const elementSuffix = screen.queryByText("Test Component1");
+  expect(elementSuffix).toBeInTheDocument();
+
+  expect(element).toBeInTheDocument();
+  expect(element2).toBeNull();
+  expect(element3).toBeNull();
+});
