@@ -23,6 +23,8 @@ function TestComponentExamples() {
       <input id="test" />
 
       <input placeholder="TestYlmgrbz" />
+
+      <div>ylmgrbz</div>
     </>
   );
 }
@@ -35,6 +37,8 @@ test("renders TestComponentExamples", () => {
   const elementLabel = screen.getByLabelText("Test");
   const elementsInput = screen.getAllByRole("textbox");
   const elementPlaceholder = screen.getByPlaceholderText("TestYlmgrbz");
+  const elementDiv = screen.getByText("ylmgrbz");
+  expect(elementDiv).toBeInTheDocument();
   expect(elementPlaceholder).toBeInTheDocument();
   expect(elementsInput.length).toBe(2);
   expect(elementLabel).toBeInTheDocument();
