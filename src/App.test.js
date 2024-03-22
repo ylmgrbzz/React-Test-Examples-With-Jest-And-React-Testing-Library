@@ -1,5 +1,6 @@
 import { waitFor, render, screen } from "@testing-library/react";
 import { useEffect, useState } from "react";
+import userEvent from "@testing-library/user-event";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -186,4 +187,45 @@ it("renders TestComponentExamplesAsyncAwaitFor", async () => {
   await waitFor(() => {
     expect(screen.queryByText("yalim")).not.toBeInTheDocument();
   });
+});
+
+function TestComponentUseClick() {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleDecrement = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <>
+      <div>
+        <h1>{count}</h1>
+        <button onClick={handleIncrement}>Increment</button>
+        <button onClick={handleDecrement}>Decrement</button>
+      </div>
+    </>
+  );
+}
+
+it("renders TestComponentUseClick", async () => {
+  render(<TestComponentUseClick />);
+
+  await userEvent.click(screen.getByRole("button", { name: "Increment" }));
+
+  expect(screen.getByRole("heading")).toHaveTextContent("1");
+
+  expect(screen.getByText("1")).toBeInTheDocument();
+  expect(screen.queryByText("0")).not.toBeInTheDocument();
+
+  const element = screen.queryByText("0");
+  const buttonIncrement = screen.getByText("Increment");
+  const buttonDecrement = screen.getByText("Decrement");
+
+  expect(element).toBeNull();
+  expect(buttonIncrement).toBeInTheDocument();
+  expect(buttonDecrement).toBeInTheDocument();
 });
