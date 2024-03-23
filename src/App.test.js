@@ -206,6 +206,12 @@ function TestComponentUseClick() {
         <h1>{count}</h1>
         <button onClick={handleIncrement}>Increment</button>
         <button onClick={handleDecrement}>Decrement</button>
+
+        <select multiple>
+          <option value="1">Apple</option>
+          <option value="2"> Banana </option>
+          <option value="3">Cherry</option>
+        </select>
       </div>
     </>
   );
@@ -220,8 +226,18 @@ it("renders TestComponentUseClick", async () => {
     "{enter}"
   );
 
+  const fruits = screen.getByRole("listbox");
+
+  await userEvent.selectOptions(fruits, ["1", "3"]);
+
+  const incrementButton = screen.getByRole("button", { name: "Increment" });
+  expect(incrementButton).not.toHaveFocus();
+
+  expect(document.activeElement).not.toBe(incrementButton);
+
+  expect(screen.getByRole("option", { name: "Apple" }).selected).toBe(true);
+
   expect(screen.getByRole("heading")).toHaveTextContent("2");
-  expect(screen.getByRole("button", { name: "Increment" })).toHaveFocus();
 
   expect(screen.getByText("2")).toBeInTheDocument();
   expect(screen.queryByText("0")).not.toBeInTheDocument();
