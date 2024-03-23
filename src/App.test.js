@@ -215,10 +215,15 @@ it("renders TestComponentUseClick", async () => {
   render(<TestComponentUseClick />);
 
   await userEvent.click(screen.getByRole("button", { name: "Increment" }));
+  await userEvent.type(
+    screen.getByRole("button", { name: "Increment" }),
+    "{enter}"
+  );
 
-  expect(screen.getByRole("heading")).toHaveTextContent("1");
+  expect(screen.getByRole("heading")).toHaveTextContent("2");
+  expect(screen.getByRole("button", { name: "Increment" })).toHaveFocus();
 
-  expect(screen.getByText("1")).toBeInTheDocument();
+  expect(screen.getByText("2")).toBeInTheDocument();
   expect(screen.queryByText("0")).not.toBeInTheDocument();
 
   const element = screen.queryByText("0");
