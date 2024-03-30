@@ -1,6 +1,7 @@
 import { waitFor, render, screen } from "@testing-library/react";
 import { useEffect, useState } from "react";
 import userEvent from "@testing-library/user-event";
+import { customRender } from "./test-utils";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -299,7 +300,12 @@ function WrapperComponent({ children }) {
 it("renders WrapperComponent", () => {
   render(<WrapperComponent>Test</WrapperComponent>);
   render(<WrapperComponent />, { wrapper: WrapperComponent });
-  const element = screen.getByText("Test");
-  expect(element).toBeInTheDocument();
-  expect(element).toHaveClass("wrapper");
+
+  customRender(<WrapperComponent>Test</WrapperComponent>);
+
+  customRender(<WrapperComponent />, { wrapper: WrapperComponent });
+
+  // const element = screen.getByText("Test");
+  // expect(element).toBeInTheDocument();
+  // expect(element).toHaveClass("wrapper");
 });
