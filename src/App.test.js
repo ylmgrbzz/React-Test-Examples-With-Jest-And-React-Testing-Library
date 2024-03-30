@@ -6,6 +6,7 @@ import { act } from "react-dom/test-utils";
 import { useFetch } from "./test-utils";
 import App from "./App";
 import Listing from "./listing";
+import { DiProvider, injectable } from "react-magnetic-di";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -355,5 +356,22 @@ describe("<App>", () => {
     screen.debug();
     const element = screen.getByTestId("listing");
     expect(element).toBeInTheDocument();
+  });
+});
+
+describe("<Dimacro>", () => {
+  it("it should be render dimarco ", async () => {
+    const mockListing = () => <div data-testid="listing" />;
+    const listingDi = injectable(Listing, mockListing);
+
+    render(<App />, {
+      wrapper: (props) => (
+        <DiProvider use={[listingDi]} {...props}>
+          {props.children}
+        </DiProvider>
+      ),
+    });
+
+    screen.debug();
   });
 });
