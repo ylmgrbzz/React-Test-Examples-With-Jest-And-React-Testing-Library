@@ -4,6 +4,8 @@ import userEvent from "@testing-library/user-event";
 import { customRender } from "./test-utils";
 import { act } from "react-dom/test-utils";
 import { useFetch } from "./test-utils";
+import App from "./App";
+import Listing from "./listing";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -345,3 +347,10 @@ it("renders useCustomHook", () => {
 //     console.log(result);
 //   });
 // });
+
+describe("<App>", () => {
+  it("it should be render  ", async () => {
+    render(<App ListingComponent={Listing} />);
+    screen.debug();
+  });
+});
