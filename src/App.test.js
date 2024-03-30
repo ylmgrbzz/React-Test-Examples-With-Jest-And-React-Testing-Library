@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { customRender } from "./test-utils";
 import { act } from "react-dom/test-utils";
+import { useFetch } from "./test-utils";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
