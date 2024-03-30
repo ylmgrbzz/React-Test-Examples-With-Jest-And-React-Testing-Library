@@ -333,3 +333,15 @@ it("renders useCustomHook", () => {
 
   expect(result.current.name).toBe("yalimgrbz");
 });
+
+// const axios = require("axios");
+
+// // jest.mock("axios");
+
+// describe("useFetch", () => {
+//   it("fetches data from an API", async () => {
+//     axios.get.mockResolvedValueOnce({ data: { greeting: "hello there" } });
+//     const result = await getPosts();
+//     console.log(result);
+//   });
+// });

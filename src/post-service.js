@@ -16,7 +16,9 @@ const getPost = async (id) => {
     });
 };
 
-export const postService = {
+const postService = {
   getPosts,
   getPost,
 };
+
+export default postService;
