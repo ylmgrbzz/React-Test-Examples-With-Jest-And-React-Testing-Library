@@ -5,6 +5,7 @@ function App({ ListingComponent = Listing }) {
   return (
     <div>
       <ListingComponent />
+      <h1>App</h1>
     </div>
   );
 }

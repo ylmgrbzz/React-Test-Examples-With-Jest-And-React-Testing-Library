@@ -350,7 +350,8 @@ it("renders useCustomHook", () => {
 
 describe("<App>", () => {
   it("it should be render  ", async () => {
-    render(<App ListingComponent={Listing} />);
+    // render(<App ListingComponent={Listing} />);
+    render(<App ListingComponent={() => <div data-testid="listing" />} />);
     screen.debug();
   });
 });
