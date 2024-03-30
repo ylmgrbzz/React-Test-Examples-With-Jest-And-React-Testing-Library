@@ -353,5 +353,7 @@ describe("<App>", () => {
     // render(<App ListingComponent={Listing} />);
     render(<App ListingComponent={() => <div data-testid="listing" />} />);
     screen.debug();
+    const element = screen.getByTestId("listing");
+    expect(element).toBeInTheDocument();
   });
 });
