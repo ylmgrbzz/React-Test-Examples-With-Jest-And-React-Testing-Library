@@ -1,7 +1,8 @@
-import { waitFor, render, screen } from "@testing-library/react";
+import { waitFor, render, screen, renderHook } from "@testing-library/react";
 import { useEffect, useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { customRender } from "./test-utils";
+import { act } from "react-dom/test-utils";
 
 function TestComponent() {
   return <div role="button">Test Component</div>;
@@ -308,4 +309,26 @@ it("renders WrapperComponent", () => {
   // const element = screen.getByText("Test");
   // expect(element).toBeInTheDocument();
   // expect(element).toHaveClass("wrapper");
+});
+
+function useCustomHook() {
+  const [name, setName] = useState("yalim");
+
+  const changeName = (newName) => {
+    setName(newName);
+  };
+
+  return { name, changeName };
+}
+
+it("renders useCustomHook", () => {
+  const { result } = renderHook(() => useCustomHook());
+
+  expect(result.current.name).toBe("yalim");
+
+  act(() => {
+    result.current.changeName("yalimgrbz");
+  });
+
+  expect(result.current.name).toBe("yalimgrbz");
 });
