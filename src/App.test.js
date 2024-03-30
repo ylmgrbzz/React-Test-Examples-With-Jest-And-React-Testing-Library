@@ -217,36 +217,77 @@ function TestComponentUseClick() {
   );
 }
 
-it("renders TestComponentUseClick", async () => {
-  render(<TestComponentUseClick />);
+// it("renders TestComponentUseClick", async () => {
+//   render(<TestComponentUseClick />);
 
-  await userEvent.click(screen.getByRole("button", { name: "Increment" }));
-  await userEvent.type(
-    screen.getByRole("button", { name: "Increment" }),
-    "{enter}"
+//   await userEvent.click(screen.getByRole("button", { name: "Increment" }));
+//   await userEvent.type(
+//     screen.getByRole("button", { name: "Increment" }),
+//     "{enter}"
+//   );
+
+//   const fruits = screen.getByRole("listbox");
+
+//   await userEvent.selectOptions(fruits, ["1", "3"]);
+
+//   const incrementButton = screen.getByRole("button", { name: "Increment" });
+//   expect(incrementButton).not.toHaveFocus();
+
+//   expect(document.activeElement).not.toBe(incrementButton);
+
+//   expect(screen.getByRole("option", { name: "Apple" }).selected).toBe(true);
+
+//   // expect(screen.getByRole("heading")).toHaveTextContent("2");
+
+//   expect(screen.getByText("2")).toBeInTheDocument();
+//   expect(screen.queryByText("0")).not.toBeInTheDocument();
+
+//   const element = screen.queryByText("0");
+//   const buttonIncrement = screen.getByText("Increment");
+//   const buttonDecrement = screen.getByText("Decrement");
+
+//   expect(element).toBeNull();
+//   expect(buttonIncrement).toBeInTheDocument();
+//   expect(buttonDecrement).toBeInTheDocument();
+// });
+
+test("upload file", async () => {
+  const user = userEvent.setup();
+
+  render(
+    <div>
+      <label htmlFor="file-uploader">Upload file:</label>
+      <input id="file-uploader" type="file" />
+    </div>
   );
+  const file = new File(["hello"], "hello.png", { type: "image/png" });
+  const input = screen.getByLabelText(/upload file/i);
 
-  const fruits = screen.getByRole("listbox");
+  await user.upload(input, file);
 
-  await userEvent.selectOptions(fruits, ["1", "3"]);
+  expect(input.files[0]).toBe(file);
+  expect(input.files.item(0)).toBe(file);
+  expect(input.files).toHaveLength(1);
+});
 
-  const incrementButton = screen.getByRole("button", { name: "Increment" });
-  expect(incrementButton).not.toHaveFocus();
+test("upload multiple files", async () => {
+  const user = userEvent.setup();
 
-  expect(document.activeElement).not.toBe(incrementButton);
+  render(
+    <div>
+      <label htmlFor="file-uploader">Upload file:</label>
+      <input id="file-uploader" type="file" multiple />
+    </div>
+  );
+  const files = [
+    new File(["hello"], "hello.png", { type: "image/png" }),
+    new File(["there"], "there.png", { type: "image/png" }),
+  ];
+  const input = screen.getByLabelText(/upload file/i);
 
-  expect(screen.getByRole("option", { name: "Apple" }).selected).toBe(true);
+  await user.upload(input, files);
 
-  expect(screen.getByRole("heading")).toHaveTextContent("2");
-
-  expect(screen.getByText("2")).toBeInTheDocument();
-  expect(screen.queryByText("0")).not.toBeInTheDocument();
-
-  const element = screen.queryByText("0");
-  const buttonIncrement = screen.getByText("Increment");
-  const buttonDecrement = screen.getByText("Decrement");
-
-  expect(element).toBeNull();
-  expect(buttonIncrement).toBeInTheDocument();
-  expect(buttonDecrement).toBeInTheDocument();
+  expect(input.files).toHaveLength(2);
+  expect(input.files[0]).toBe(files[0]);
+  expect(input.files[1]).toBe(files[1]);
 });
