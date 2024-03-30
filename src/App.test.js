@@ -291,3 +291,15 @@ test("upload multiple files", async () => {
   expect(input.files[0]).toBe(files[0]);
   expect(input.files[1]).toBe(files[1]);
 });
+
+function WrapperComponent({ children }) {
+  return <div className="wrapper">{children}</div>;
+}
+
+it("renders WrapperComponent", () => {
+  render(<WrapperComponent>Test</WrapperComponent>);
+  render(<WrapperComponent />, { wrapper: WrapperComponent });
+  const element = screen.getByText("Test");
+  expect(element).toBeInTheDocument();
+  expect(element).toHaveClass("wrapper");
+});
